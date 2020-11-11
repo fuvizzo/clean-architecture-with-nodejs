@@ -1,7 +1,7 @@
 const debug = require('debug')('OAuth2Service');
 
 const OAuth2Server = require('oauth2-server');
-const OAuth2Model = require('../models/oauth2.js').getInstance();
+const OAuth2Model = require('../models/oauth2.js');
 
 const { Request, Response } = OAuth2Server;
 
@@ -9,7 +9,7 @@ const { Request, Response } = OAuth2Server;
  * Instantiates OAuth2Server using the supplied model.
  */
 const oAuth2 = new OAuth2Server({
-  model: OAuth2Model,
+  model: new OAuth2Model(),
   accessTokenLifetime: process.env.ACCESS_TOKEN_LIFETIME,
   allowBearerTokensInQueryString: true,
 });
@@ -41,7 +41,7 @@ class OAuth2Service {
     const response = new Response(res);
 
     try {
-      oAuth2.authenticate(request, response);
+      await oAuth2.authenticate(request, response);
       debug('the request was successfully authenticated');
       next();
     } catch (err) {

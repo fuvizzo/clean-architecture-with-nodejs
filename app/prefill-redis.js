@@ -1,13 +1,14 @@
 const Redis = require('ioredis');
 
 const db = new Redis();
+
 db.multi()
-  .hmset('users:gsk', {
+  .hmset('users:test-user', {
     id: '1',
-    username: 'user',
+    username: 'test-user',
     password: 'password',
   })
-  .hmset('clients:avis', {
+  .hmset(`clients:${process.env.CLIENT_ID}`, {
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
   })

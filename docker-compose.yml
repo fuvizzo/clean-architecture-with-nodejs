@@ -21,9 +21,9 @@ services:
       - redis
   redis:
     image: redis
-    container_name: cache
-    expose:
-      - 6379
+    container_name: redis
+    ports:
+      - "6379:6379"
   mongo:
     image: mongo:latest
     container_name: mongodb

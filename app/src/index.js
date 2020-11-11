@@ -8,6 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.all('/oauth/token', OAuth2Service.obtainToken);
+
 app.use(OAuth2Service.authenticateRequest);
 
 app.get('/', (req, res) => {

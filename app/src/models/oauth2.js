@@ -1,0 +1,126 @@
+const debug = require('debug')('OAuth2Model');
+const Redis = require('ioredis');
+const fmt = require('util').format;
+
+const formats = {
+  client: 'clients:%s',
+  token: 'tokens:%s',
+  user: 'users:%s',
+};
+
+class OAuth2Model {
+  constructor() {
+    this.redisClient = new Redis(process.env.REDIS_URL);
+  }
+
+  /**
+  * Get access token.
+  */
+  async getAccessToken(bearerToken) {
+    const token = await this.redisClient.hgetall(fmt(formats.token, bearerToken));
+    if (!token || token.accessToken !== bearerToken) {
+      return {};
+    }
+    debug('getAccessToken: sent access token successfully');
+    return {
+      accessToken: new Date(token.accessToken),
+      accessTokenExpiresAt: new Date(token.accessTokenExpiresAt),
+      refreshToken: token.refreshToken,
+      refreshTokenExpiresAt: token.refreshTokenExpiresAt,
+      client: {
+        id: token.clientId,
+      },
+      user: {
+        id: token.userId,
+      },
+
+    };
+  }
+
+  /**
+  * Get client.
+  */
+  async getClient(clientId, clientSecret) {
+    const client = await this.redisClient.hgetall(fmt(formats.client, clientId));
+
+    if (!client || client.clientSecret !== clientSecret) {
+      return {};
+    }
+    debug('Sent client details successfully');
+    return {
+      id: client.id,
+      clientId: client.clientId,
+      clientSecret: client.clientSecret,
+      grants: ['password', 'refresh_token'],
+    };
+  }
+
+  /**
+   * Get refresh token.
+   */
+  async getRefreshToken(bearerToken) {
+    const token = await this.redisClient.hgetall(fmt(formats.token, bearerToken));
+
+    if (!token || token.accessToken !== bearerToken) {
+      return {};
+    }
+
+    return {
+      clientId: token.clientId,
+      expires: token.refreshTokenExpiresOn,
+      refreshToken: token.accessToken,
+      userId: token.userId,
+    };
+  }
+
+  /**
+  * Get user.
+  */
+  async getUser(username, password) {
+    const user = await this.redisClient.hgetall(fmt(formats.user, username));
+
+    if (!user || password !== user.password) {
+      return {};
+    }
+    debug('getUser: user details sent succesfully!!');
+    return {
+      id: user.id,
+      username: user.username,
+      password: user.password,
+      grants: ['password', 'refresh_token'],
+    };
+  }
+
+  /**
+  * Save token.
+  */
+  async saveToken(token, client, user) {
+    const pipe = this.redisClient.pipeline();
+    const enhancedToken = {
+      ...token, ...{ userId: user.id, clientId: client.clientId },
+    };
+
+    const data = {
+      accessToken: token.accessToken,
+      accessTokenExpiresAt: new Date(token.accessTokenExpiresAt),
+      refreshToken: token.refreshToken,
+      refreshTokenExpiresAt: new Date(token.refreshTokenExpiresAt),
+      client: {
+        id: client.id,
+      },
+      user: {
+        id: user.id,
+      },
+    };
+    await pipe
+      .hmset(fmt(formats.token, token.accessToken), enhancedToken)
+      .hmset(fmt(formats.token, token.refreshToken), enhancedToken)
+      .exec()
+      .then(() => {
+        debug('saveToken: token %s saved successfully', enhancedToken);
+      });
+    return data;
+  }
+}
+
+module.exports = OAuth2Model;

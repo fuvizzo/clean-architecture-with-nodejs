@@ -1,0 +1,44 @@
+version: "3.4"
+services:
+  app:
+    image: express-server
+    build:
+      context: app
+      target: prod
+    environment:
+      NODE_ENV: production
+      MONGO_URL: ${MONGO_URL}
+      REDIS_URL: ${REDIS_URL}
+      CLIENT_ID: ${CLIENT_ID}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+      ACCESS_TOKEN_LIFETIME: ${ACCESS_TOKEN_LIFETIME}
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app:/usr/src/app
+    links:
+      - mongo
+      - redis
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    hostname: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.docker/mongodb/config/mongod.conf:/etc/mongod.conf
+      - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+      - ./.docker/mongodb/data/db/:/data/db/
+      #- ./.docker/mongodb/data/log/:/var/log/mongodb/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_USERNAME: ${MONGO_INITDB_USERNAME}
+      MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASSWORD}
+    command: ["-f", "/etc/mongod.conf"]

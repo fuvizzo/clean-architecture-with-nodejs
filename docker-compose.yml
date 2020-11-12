@@ -14,7 +14,7 @@ services:
       ACCESS_TOKEN_LIFETIME: ${ACCESS_TOKEN_LIFETIME}
       LISTENING_PORT: ${LISTENING_PORT}
     ports:
-      - 3000:${LISTENING_PORT}
+      - 3000:3000
     volumes:
       - ./app:/usr/src/app
     links:

@@ -5,6 +5,7 @@ const OpenWeatherServices = require('../frameworks/external-services/open-weathe
 
 const databaseServices = new MongoDbDatabaseServices();
 const cachingServices = new RedisCachingServices();
+
 databaseServices.initDatabase();
 cachingServices.initDatabase();
 

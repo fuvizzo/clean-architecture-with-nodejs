@@ -9,7 +9,7 @@ module.exports = class MongoDbDatabaseServices extends DatabaseServices {
       useUnifiedTopology: true,
     };
     const connection = await mongoose.connect(
-      process.env.DB_CONNECTION_STRING,
+      process.env.MONGO_URL,
       mongooseOpts,
     );
     this.locationRepository = new MongoDbLocationRepository();

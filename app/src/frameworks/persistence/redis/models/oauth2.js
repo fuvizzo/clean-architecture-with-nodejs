@@ -95,6 +95,16 @@ class RedisOAuth2Model extends OAuth2Model {
     };
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  verifyScope(token, scope) {
+    if (!token.scope) {
+      return false;
+    }
+    const requestedScopes = scope.split(' ');
+    const authorizedScopes = token.scope.split(' ');
+    return requestedScopes.every((s) => authorizedScopes.indexOf(s) >= 0);
+  }
+
   /**
   * Save token.
   */

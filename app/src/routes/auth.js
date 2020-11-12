@@ -9,7 +9,7 @@ const OAuth2Service = require('../services/oauth');
 const locationController = require('../controllers');
 
 module.exports = (dependencies) => {
-  const { cachingServices } = dependencies.cachingServices;
+  const { cachingServices } = dependencies;
   const oAuth2Service = OAuth2Service(cachingServices);
 
   router.all('/oauth/token', asyncHandler(async (req, res, next) => oAuth2Service.obtainToken(req, res, next)));

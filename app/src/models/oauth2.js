@@ -6,6 +6,7 @@ const formats = {
   client: 'clients:%s',
   token: 'tokens:%s',
   user: 'users:%s',
+  grantTypes: 'clients:%s:grant_types',
 };
 
 class OAuth2Model {
@@ -42,16 +43,15 @@ class OAuth2Model {
   */
   async getClient(clientId, clientSecret) {
     const client = await this.redisClient.hgetall(fmt(formats.client, clientId));
+    const grants = await this.redisClient.smembers(fmt(formats.grantTypes, clientId));
 
     if (!client || client.clientSecret !== clientSecret) {
       return {};
     }
     debug('Sent client details successfully');
     return {
-      id: client.id,
       clientId: client.clientId,
-      clientSecret: client.clientSecret,
-      grants: ['password', 'refresh_token'],
+      grants,
     };
   }
 
@@ -69,7 +69,9 @@ class OAuth2Model {
       clientId: token.clientId,
       expires: token.refreshTokenExpiresOn,
       refreshToken: token.accessToken,
-      userId: token.userId,
+      user: {
+        id: token.userId,
+      },
     };
   }
 
@@ -106,7 +108,7 @@ class OAuth2Model {
       refreshToken: token.refreshToken,
       refreshTokenExpiresAt: new Date(token.refreshTokenExpiresAt),
       client: {
-        id: client.id,
+        id: client.clientId,
       },
       user: {
         id: user.id,

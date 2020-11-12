@@ -11,7 +11,7 @@ const { Request, Response } = OAuth2Server;
 const oAuth2 = new OAuth2Server({
   model: new OAuth2Model(),
   accessTokenLifetime: process.env.ACCESS_TOKEN_LIFETIME,
-  allowBearerTokensInQueryString: true,
+  scope: ['refresh_token', 'client_credentials', 'password'],
 });
 /**
  * Creating constructor
@@ -20,7 +20,7 @@ class OAuth2Service {
   /**
    * Obtaine OAuth token with Basic Authentication
    */
-  static async obtainToken(req, res) {
+  static async obtainToken(req, res, next) {
     const request = new Request(req);
     const response = new Response(res);
 
@@ -29,7 +29,7 @@ class OAuth2Service {
       debug('obtainToken: token %s obtained successfully', token);
       res.json(token);
     } catch (err) {
-      res.status(err.code || 500).json(err);
+      next(err);
     }
   }
 
@@ -45,7 +45,7 @@ class OAuth2Service {
       debug('the request was successfully authenticated');
       next();
     } catch (err) {
-      res.status(err.code || 500).json(err);
+      next(err);
     }
   }
 }

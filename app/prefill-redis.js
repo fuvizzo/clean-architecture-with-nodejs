@@ -12,6 +12,10 @@ db.multi()
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
   })
+  .sadd(`clients:${process.env.CLIENT_ID}:grant_types`, [
+    'password',
+    'refresh_token',
+  ])
   .exec((errs) => {
     if (errs) {
       console.error(errs[0].message);

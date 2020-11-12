@@ -21,7 +21,7 @@ services:
     links:
       - mongo
       - redis
-    command: ["nodemon", "--inspect=0.0.0.0:9229", "src/index.js"]
+    command: ["nodemon", "--inspect=0.0.0.0:9229", "src/server/index.js"]
   redis:
     image: redis
     container_name: redis

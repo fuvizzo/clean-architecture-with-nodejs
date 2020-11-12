@@ -12,8 +12,9 @@ services:
       CLIENT_ID: ${CLIENT_ID}
       CLIENT_SECRET: ${CLIENT_SECRET}
       ACCESS_TOKEN_LIFETIME: ${ACCESS_TOKEN_LIFETIME}
+      LISTENING_PORT: ${LISTENING_PORT}
     ports:
-      - 3000:3000
+      - 3000:${LISTENING_PORT}
     volumes:
       - ./app:/usr/src/app
     links:

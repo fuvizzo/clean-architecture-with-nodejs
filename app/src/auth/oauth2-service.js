@@ -1,7 +1,7 @@
 const debug = require('debug')('OAuth2Service');
 
 const OAuth2Server = require('oauth2-server');
-const OAuth2Model = require('../models/oauth2.js');
+const OAuth2Model = require('../frameworks/persistence/redis/models/oauth2.js');
 
 const { Request, Response } = OAuth2Server;
 

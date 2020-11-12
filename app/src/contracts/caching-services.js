@@ -1,6 +1,6 @@
 module.exports = class CachingServices {
   constructor() {
-    this.locationRepository = null;
+    this.oAuth2 = null;
   }
 
   initDatabase() {

@@ -1,11 +1,13 @@
-const GoogleMapServices = require('../../../contracts/google-maps-services');
+const ForecastServices = require('../../../contracts/forecast-services');
 
-module.exports = class InMemoryGoogleMapServices extends GoogleMapServices {
-  static geocode(addressInstance) {
+module.exports = class OpenWeatherServices extends ForecastServices {
+  static getForecast(type, lat, lng) {
     return new Promise((resolve, reject) => {
-      if (addressInstance.country === 'IT') {
+      if (type === 'current' && lat === '' && lng === '') {
         resolve({});
-      } else { reject(new Error('Cannot geocode the given address')); }
+      } else {
+        reject(new Error('Cannot retrieve the current forecast for the given address'));
+      }
     });
   }
 };

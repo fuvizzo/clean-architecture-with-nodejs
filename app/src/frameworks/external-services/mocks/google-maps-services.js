@@ -1,4 +1,4 @@
-const GoogleMapServices = require('../../../contracts/google-maps-services');
+const GoogleMapServices = require('../../../contracts/maps-services');
 
 module.exports = class InMemoryGoogleMapServices extends GoogleMapServices {
   static geocode(addressInstance) {

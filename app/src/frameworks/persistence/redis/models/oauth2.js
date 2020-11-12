@@ -1,6 +1,7 @@
 const debug = require('debug')('OAuth2Model');
-const Redis = require('ioredis');
+
 const fmt = require('util').format;
+const OAuth2Model = require('../../../../contracts/oauth/model');
 
 const formats = {
   client: 'clients:%s',
@@ -9,9 +10,10 @@ const formats = {
   grantTypes: 'clients:%s:grant_types',
 };
 
-class OAuth2Model {
-  constructor() {
-    this.redisClient = new Redis(process.env.REDIS_URL);
+class RedisOAuth2Model extends OAuth2Model {
+  constructor(redisClient) {
+    super();
+    this.redisClient = redisClient;
   }
 
   /**
@@ -125,4 +127,4 @@ class OAuth2Model {
   }
 }
 
-module.exports = OAuth2Model;
+module.exports = RedisOAuth2Model;

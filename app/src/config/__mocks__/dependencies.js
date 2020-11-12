@@ -8,6 +8,6 @@ databaseServices.initDatabase();
 module.exports = (() => ({
   databaseServices,
   //cacheServices,
-  googleMapServices: MockedGoogleMapServices,
-  openWeatherServices: MockedOpenWeatherServices,
+  mapServices: MockedGoogleMapServices,
+  forecastServices: MockedOpenWeatherServices,
 }))();

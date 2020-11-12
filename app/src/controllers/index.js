@@ -4,8 +4,8 @@ const { newAddress: newAddressSchema } = require('../schemas/index');
 
 module.exports = (dependencies) => {
   const { locationRepository } = dependencies.databaseServices;
-  const { googleMapServices } = dependencies;
-  const locationService = LocationService(locationRepository, googleMapServices);
+  const { mapServices } = dependencies;
+  const locationService = LocationService(locationRepository, mapServices);
   return {
     checkAddress: async (req, res, next) => {
       const { error } = newAddressSchema.validate(req.body);

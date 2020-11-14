@@ -1,5 +1,5 @@
 module.exports = class MapServices {
-  geocode(addressInstance) {
+  geocode(addressStr) {
     return new Promise((resolve, reject) => {
       reject(new Error('not implemented'));
     });

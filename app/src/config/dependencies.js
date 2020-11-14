@@ -12,6 +12,6 @@ cachingServices.initDatabase();
 module.exports = (() => ({
   databaseServices,
   cachingServices,
-  mapServices: new GoogleMapServices(),
+  mapServices: GoogleMapServices,
   forecastService: new OpenWeatherServices(),
 }))();

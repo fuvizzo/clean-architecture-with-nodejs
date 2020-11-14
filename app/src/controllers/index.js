@@ -13,22 +13,25 @@ module.exports = (dependencies) => {
         next(new AppError(error.message, 400));
       } else {
         try {
-          const {
-            street,
-            streetNumber,
-            town, postalCode,
-            country,
-          } = req.body;
-
-          const response = await locationService.checkAddress(
-            street,
-            streetNumber,
-            town,
-            postalCode,
-            country,
-          );
+          const response = await locationService.checkAddress(req.body);
           res.status(201);
           res.json({ id: response.id });
+          res.end();
+        } catch (err) {
+          next(err);
+        }
+      }
+    },
+
+    checkWeather: async (req, res, next) => {
+      const { error } = newAddressSchema.validate(req.body);
+      if (error) {
+        next(new AppError(error.message, 400));
+      } else {
+        try {
+          const response = await locationService.checkWeather(req.body);
+          res.status(200);
+          res.json(response);
           res.end();
         } catch (err) {
           next(err);

@@ -5,12 +5,20 @@ module.exports = class MongoDbLocationRepository extends LocationRepository {
   constructor() {
     super();
     this.locations = [];
-    this.currentId = null;
   }
 
   add(locationInstance) {
-    const newLocation = new Location(locationInstance);
-    this.locations.push(newLocation);
-    return newLocation.save();
+    const newLocation = Location.findOneAndUpdate({
+      address: locationInstance.address,
+    }, locationInstance, {
+      new: true,
+      upsert: true,
+    });
+    this.locations.push(locationInstance);
+    return newLocation;
+  }
+
+  getByAddress(addressInstance) {
+    return Location.findOne({ address: addressInstance });
   }
 };

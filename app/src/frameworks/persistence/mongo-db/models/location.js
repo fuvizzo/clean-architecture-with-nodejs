@@ -3,15 +3,22 @@ const mongoose = require('mongoose');
 /**
  * Location model schema.
  */
+
+const coordsSchema = {
+  lng: { type: Number, required: true },
+  lat: { type: Number, required: true },
+};
+
 const locationSchema = new mongoose.Schema({
-  street: { type: String, required: true },
-  streetNumber: { type: String, required: true },
-  town: { type: String, required: true },
-  postalCode: { type: String, required: true },
-  country: { type: String, required: true },
+  address: {
+    street: { type: String, required: true },
+    streetNumber: { type: String, required: true },
+    town: { type: String, required: true },
+    postalCode: { type: String, required: true },
+    country: { type: String, required: true },
+  },
   coords: {
-    lng: { type: String, required: true },
-    lat: { type: String, required: true },
+    type: coordsSchema,
   },
   forecast: { type: Object },
 });

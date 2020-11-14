@@ -13,9 +13,12 @@ module.exports = class GoogleMapServices extends MapServices {
         key: process.env.GOOGLE_MAPS_API_KEY,
       },
     });
-    if (status === 200 && data.results.length > 0 && data.results[0].geometry.location_type === 'ROOFTOP') {
+    if (status === 200) {
+      if (data.status !== 'OK') {
+        throw new AppError(data.status);
+      }
       return data.results[0].geometry.location;
     }
-    throw new AppError('Error bau');
+    throw new AppError('Something went wrong');
   }
 };

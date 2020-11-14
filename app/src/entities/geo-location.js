@@ -1,6 +1,7 @@
 module.exports = class GeoLocation {
   constructor({
-    lat, lng,
+    lat,
+    lng,
   }) {
     this.lat = lat;
     this.lng = lng;

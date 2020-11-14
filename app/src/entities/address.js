@@ -1,6 +1,10 @@
 module.exports = class Address {
   constructor({
-    street, streetNumber, town, postalCode, country,
+    street,
+    streetNumber,
+    town,
+    postalCode,
+    country,
   }) {
     this.street = street;
     this.streetNumber = streetNumber;

@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 const LocationRepository = require('../../../contracts/repositories/location');
 const Location = require('./models/location');
 
@@ -15,6 +16,13 @@ module.exports = class MongoDbLocationRepository extends LocationRepository {
       upsert: true,
     });
     this.locations.push(locationInstance);
+    return newLocation;
+  }
+
+  update(locationId, data) {
+    const newLocation = Location.findByIdAndUpdate(locationId, data, {
+      new: true,
+    });
     return newLocation;
   }
 

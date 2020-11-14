@@ -5,7 +5,7 @@ module.exports = class LocationRepository {
     });
   }
 
-  update(locationInstance) {
+  update(locationId, data) {
     return new Promise((resolve, reject) => {
       reject(new Error('not implemented'));
     });

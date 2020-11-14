@@ -1,6 +1,7 @@
 module.exports = class Forecast {
   constructor({
-    data, type,
+    data,
+    type = 'current-weather',
   }) {
     this.data = data;
     this.type = type;

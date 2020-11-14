@@ -1,6 +1,6 @@
 const { Address, GeoLocation, Forecast } = require('../../entities/index');
 
-module.exports = (locationRepository, mapServices) => {
+module.exports = (locationRepository, mapServices, forecastServices) => {
   const checkAddress = async (data) => {
     const {
       street,
@@ -13,9 +13,9 @@ module.exports = (locationRepository, mapServices) => {
 
     const addressStr = `${street} ${streetNumber}, ${town}, ${postalCode}, ${country}`;
 
-    const newGeoLocation = new GeoLocation(await mapServices.geocode(addressStr));
-    const newLocation = { ...{ address: newAddress }, coords: newGeoLocation };
-    const newRecord = await locationRepository.add(newLocation);
+    const geoLocation = new GeoLocation(await mapServices.geocode(addressStr));
+    const location = { ...{ address: newAddress }, coords: geoLocation };
+    const newRecord = await locationRepository.add(location);
     return newRecord;
   };
 
@@ -27,8 +27,10 @@ module.exports = (locationRepository, mapServices) => {
       if (!location) {
         location = await checkAddress(data);
       }
-
-      return null;
+      const forecast = new Forecast({
+        data: await forecastServices.getData(location.coords),
+      });
+      return locationRepository.update(location.id, { forecast });
     },
   };
 };

@@ -13,5 +13,5 @@ module.exports = (() => ({
   databaseServices,
   cachingServices,
   mapServices: GoogleMapServices,
-  forecastService: new OpenWeatherServices(),
+  forecastServices: OpenWeatherServices,
 }))();

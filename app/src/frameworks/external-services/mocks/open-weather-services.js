@@ -1,7 +1,7 @@
 const ForecastServices = require('../../../contracts/forecast-services');
 
 module.exports = class OpenWeatherServices extends ForecastServices {
-  static getForecast(type, lat, lng) {
+  static getData(type, lat, lng) {
     return new Promise((resolve, reject) => {
       if (type === 'current' && lat === '' && lng === '') {
         resolve({});

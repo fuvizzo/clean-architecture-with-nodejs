@@ -1,8 +1,4 @@
-const Redis = require('ioredis');
-
-const db = new Redis();
-
-db.multi()
+module.exports = (client) => client.multi()
   .hmset('users:test-user', {
     id: '1',
     username: 'test-user',
@@ -22,7 +18,5 @@ db.multi()
       console.error(errs[0].message);
       process.exit(1);
     }
-
     console.log('Client and user added successfully');
-    process.exit();
   });

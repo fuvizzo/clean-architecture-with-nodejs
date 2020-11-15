@@ -1,12 +1,13 @@
 const InMemoryMongoDbDatabaseServices = require('../in-memory/database-services');
 const Location = require('../models/location');
 
+const databaseServices = new InMemoryMongoDbDatabaseServices();
 describe('Location model tests', () => {
   /**
    * Connect to a new in-memory database before running any tests.
    */
   beforeAll(async () => {
-    await InMemoryMongoDbDatabaseServices.initDatabase();
+    await databaseServices.initDatabase();
     await Location.deleteMany({});
   });
 
@@ -15,7 +16,7 @@ describe('Location model tests', () => {
   });
 
   afterAll(async () => {
-    await InMemoryMongoDbDatabaseServices.closeDatabase();
+    await databaseServices.closeDatabase();
   });
 
   it('Has a module', () => {

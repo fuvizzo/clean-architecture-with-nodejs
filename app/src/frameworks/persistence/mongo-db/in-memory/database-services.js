@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
@@ -7,22 +8,21 @@ const DatabaseServices = require('../../../../contracts/database-services');
 const MongoDbLocationRepository = require('../location-repository');
 
 module.exports = class InMemoryMongoDbDatabaseServices extends DatabaseServices {
-  static async initDatabase() {
+  async initDatabase() {
     const uri = await mongoDb.getUri();
 
     const mongooseOpts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    const connection = await mongoose.connect(uri, mongooseOpts);
+    this.client = await mongoose.connect(uri, mongooseOpts);
     this.locationRepository = new MongoDbLocationRepository();
-    return connection;
   }
 
   /**
    * Drop database, close the connection and stop mongod.
    */
-  static async closeDatabase() {
+  async closeDatabase() {
     await mongoose.connection.close();
     await mongoDb.stop();
   }
@@ -30,7 +30,7 @@ module.exports = class InMemoryMongoDbDatabaseServices extends DatabaseServices 
   /**
    * Remove all the data for all db collections.
    */
-  static async clearDatabase() {
+  async clearDatabase() {
     const { collections } = mongoose.connection;
 
     for (const key in collections) {

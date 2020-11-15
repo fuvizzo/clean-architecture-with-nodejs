@@ -1,4 +1,3 @@
-const debug = require('debug')('express-server');
 const app = require('express')();
 const bodyParser = require('body-parser');
 
@@ -22,10 +21,4 @@ app.all('*', (req, res, next) => {
 
 app.use(errorMiddleware);
 
-app.listen(process.env.LISTENING_PORT, () => console.log(`Server running on port ${process.env.LISTENING_PORT}`));
-
-process.on('unhandledRejection', (reason, p) => {
-  // Recommended: send the information to a crash reporting service (i.e. sentry.io)
-  debug('Unhandled Rejection:', reason.stack);
-  process.exit(1);
-});
+module.exports = app;

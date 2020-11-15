@@ -1,7 +1,7 @@
 const debug = require('debug')('OAuth2Model');
-
 const fmt = require('util').format;
 const OAuth2Model = require('../../../../contracts/oauth/model');
+
 
 const formats = {
   client: 'clients:%s',
@@ -22,7 +22,7 @@ class RedisOAuth2Model extends OAuth2Model {
   async getAccessToken(bearerToken) {
     const token = await this.redisClient.hgetall(fmt(formats.token, bearerToken));
     if (!token || token.accessToken !== bearerToken) {
-      return {};
+      return null;
     }
     debug('getAccessToken: sent access token successfully');
     return {
@@ -49,7 +49,7 @@ class RedisOAuth2Model extends OAuth2Model {
     const grants = await this.redisClient.smembers(fmt(formats.grantTypes, clientId));
 
     if (!client || client.clientSecret !== clientSecret) {
-      return {};
+      return null;
     }
     debug('Sent client details successfully');
     return {
@@ -65,7 +65,7 @@ class RedisOAuth2Model extends OAuth2Model {
     const token = await this.redisClient.hgetall(fmt(formats.token, bearerToken));
 
     if (!token || token.accessToken !== bearerToken) {
-      return {};
+      return null;
     }
 
     return {
@@ -85,7 +85,7 @@ class RedisOAuth2Model extends OAuth2Model {
     const user = await this.redisClient.hgetall(fmt(formats.user, username));
 
     if (!user || password !== user.password) {
-      return {};
+      return null;
     }
     debug('getUser: user details sent succesfully!!');
     return {

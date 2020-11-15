@@ -26,9 +26,7 @@ module.exports = (locationRepository, mapServices, forecastServices) => {
       if (!location) {
         location = await checkAddress(data);
       }
-      const forecast = new Forecast({
-        data: await forecastServices.getData(location.coords),
-      });
+      const forecast = new Forecast(await forecastServices.getData(location.coords));
       return locationRepository.update(location.id, { forecast });
     },
   };

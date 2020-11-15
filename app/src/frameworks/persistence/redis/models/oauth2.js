@@ -26,10 +26,11 @@ class RedisOAuth2Model extends OAuth2Model {
     }
     debug('getAccessToken: sent access token successfully');
     return {
-      accessToken: new Date(token.accessToken),
+      accessToken: token.accessToken,
       accessTokenExpiresAt: new Date(token.accessTokenExpiresAt),
       refreshToken: token.refreshToken,
       refreshTokenExpiresAt: token.refreshTokenExpiresAt,
+      scope: token.scope,
       client: {
         id: token.clientId,
       },
@@ -96,13 +97,12 @@ class RedisOAuth2Model extends OAuth2Model {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  verifyScope(token, scope) {
+  verifyScope(token, authorizedScopes) {
     if (!token.scope) {
       return false;
     }
-    const requestedScopes = scope.split(' ');
-    const authorizedScopes = token.scope.split(' ');
-    return requestedScopes.every((s) => authorizedScopes.indexOf(s) >= 0);
+    const requestedScopes = token.scope.split(' ');
+    return requestedScopes.every((requested) => authorizedScopes.some((authorized) => requested === authorized));
   }
 
   /**

@@ -8,11 +8,10 @@ module.exports = class MongoDbDatabaseServices extends DatabaseServices {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    const connection = await mongoose.connect(
+    this.client = await mongoose.connect(
       process.env.MONGO_URL,
       mongooseOpts,
     );
     this.locationRepository = new MongoDbLocationRepository();
-    return connection;
   }
 };

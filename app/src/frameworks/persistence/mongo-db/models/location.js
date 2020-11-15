@@ -16,6 +16,7 @@ const locationSchema = new mongoose.Schema({
     lat: { type: Number, required: true },
   },
   forecast: { type: Object },
+  timeStamp: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Location', locationSchema);

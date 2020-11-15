@@ -20,7 +20,6 @@ module.exports = (locationRepository, mapServices, forecastServices) => {
   };
 
   return {
-    checkAddress,
     checkWeather: async (data) => {
       const address = new Address(data);
       let location = await locationRepository.getByAddress(address);

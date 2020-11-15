@@ -1,4 +1,5 @@
 const express = require('express');
+const ExpressRedisCache = require('express-redis-cache');
 
 const router = express.Router();
 
@@ -12,29 +13,22 @@ module.exports = (dependencies) => {
   const { cachingServices } = dependencies;
   const oAuth2Service = OAuth2Service(cachingServices);
 
-  /* router.all('/oauth/token', asyncHandler(async (req, res, next) => oAuth2Service.obtainToken(req, res, next)));
+  const cache = ExpressRedisCache({
+    expire: Number(process.env.REDIS_CACHE_EXPIRATION_PERIOD),
+    client: cachingServices.client,
+  });
 
-  router.use(oAuth2Service.authenticateRequest); */
+  router.all('/oauth/token', asyncHandler(async (req, res, next) => oAuth2Service.obtainToken(req, res, next)));
 
-  router.post(
-    '/address',
-    asyncHandler(
-      async (req, res, next) => locationController(dependencies).checkAddress(req, res, next),
-    ),
-  );
+  router.use(oAuth2Service.authenticateRequest);
 
-  router.post(
+  router.get(
     '/weather',
+    cache.route(),
     asyncHandler(
       async (req, res, next) => locationController(dependencies).checkWeather(req, res, next),
     ),
   );
-
-  /*  router.get('/', asyncHandler(
-     async (req, res) => {
-       res.send('Congratulations, you are in the authorized area!');
-     },
-   )); */
 
   return router;
 };

@@ -1,5 +1,6 @@
 module.exports = class DatabaseServices {
   constructor() {
+    this.client = null;
     this.locationRepository = null;
   }
 

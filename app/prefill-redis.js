@@ -7,6 +7,7 @@ db.multi()
     id: '1',
     username: 'test-user',
     password: 'password',
+    email: 'test-user@foo.foo',
   })
   .hmset(`clients:${process.env.CLIENT_ID}`, {
     clientId: process.env.CLIENT_ID,

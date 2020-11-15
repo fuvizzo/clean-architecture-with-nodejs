@@ -8,6 +8,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prefill-redis": "node -r dotenv/config prefill-redis.js dotenv_config_path=../.env"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testPathIgnorePatterns": [
+      "/.history/"
+    ]
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

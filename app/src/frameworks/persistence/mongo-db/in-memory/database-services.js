@@ -35,7 +35,7 @@ module.exports = class InMemoryMongoDbDatabaseServices extends DatabaseServices 
 
     for (const key in collections) {
       const collection = collections[key];
-      await collection.deleteMany();
+      collection.deleteMany();
     }
   }
 };

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
  * Location model schema.
  */
 const locationSchema = new mongoose.Schema({
+  queriedBy: { type: String, required: true },
   address: {
     street: { type: String, required: true },
     streetNumber: { type: String, required: true },

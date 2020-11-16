@@ -57,11 +57,16 @@ describe('Location service unit tests', () => {
         );
 
         await locationService.checkWeather({
-          street: 'Calle Marina',
-          streetNumber: '187',
-          town: 'Barcelona',
-          postalCode: '08013',
-          country: 'Spain',
+          address: {
+            street: 'Calle Marina',
+            streetNumber: '187',
+            town: 'Barcelona',
+            postalCode: '08013',
+            country: 'Spain',
+          },
+          user: {
+            email: 'foo@foo',
+          },
         });
 
         sinon.assert.calledOnce(LocationRepository.prototype.add);
@@ -69,6 +74,7 @@ describe('Location service unit tests', () => {
         sinon.assert.calledOnce(MapServices.prototype.geocode);
         sinon.assert.calledOnce(ForecastServices.prototype.getData);
 
+        expect(location.queriedBy).toEqual('foo@foo');
         expect(location.id).toEqual('xpz123');
         expect(location.address.street).toEqual('Calle Marina');
         expect(location.address.streetNumber).toEqual('187');

@@ -13,7 +13,10 @@ module.exports = (dependencies) => {
         next(new AppError(error.message, 400));
       } else {
         try {
-          const response = await locationService.checkWeather(req.query);
+          const response = await locationService.checkWeather({
+            address: req.query,
+            user: res.auth.user,
+          });
           res.status(200);
           res.json(response);
           res.end();

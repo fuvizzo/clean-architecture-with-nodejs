@@ -1,3 +1,5 @@
+const auth = require('../../routes/auth');
+
 const debug = require('debug')('OAuth2Service');
 
 module.exports = (cachingServices) => {
@@ -34,8 +36,9 @@ module.exports = (cachingServices) => {
       const response = new Response(res);
 
       try {
-        await oAuth2.authenticate(request, response);
+        const authData = await oAuth2.authenticate(request, response);
         debug('the request was successfully authenticated');
+        res.auth = authData;
         next();
       } catch (err) {
         next(err);

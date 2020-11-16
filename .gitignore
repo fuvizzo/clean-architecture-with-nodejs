@@ -1,6 +1,7 @@
 /.history
 /.vscode
-.env
+.env*
 /.docker/mongodb/data/*
 /**/node_modules/*
+/**/coverage/
  

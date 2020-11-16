@@ -34,10 +34,7 @@ class RedisOAuth2Model extends OAuth2Model {
       client: {
         id: token.clientId,
       },
-      user: {
-        id: token.userId,
-      },
-
+      user: JSON.parse(token.user),
     };
   }
 
@@ -72,9 +69,7 @@ class RedisOAuth2Model extends OAuth2Model {
       clientId: token.clientId,
       expires: token.refreshTokenExpiresOn,
       refreshToken: token.accessToken,
-      user: {
-        id: token.userId,
-      },
+      user: JSON.parse(token.user),
     };
   }
 
@@ -89,9 +84,10 @@ class RedisOAuth2Model extends OAuth2Model {
     }
     debug('getUser: user details sent succesfully!!');
     return {
-      id: user.id,
-      username: user.username,
-      password: user.password,
+      basic_user_info: {
+        username: user.username,
+      },
+      email: user.email,
       grants: ['password', 'refresh_token'],
     };
   }
@@ -102,7 +98,9 @@ class RedisOAuth2Model extends OAuth2Model {
       return false;
     }
     const requestedScopes = token.scope.split(' ');
-    return requestedScopes.every((requested) => authorizedScopes.some((authorized) => requested === authorized));
+    return requestedScopes.every((requested) => authorizedScopes.some(
+      (authorized) => requested === authorized,
+    ));
   }
 
   /**
@@ -110,9 +108,11 @@ class RedisOAuth2Model extends OAuth2Model {
   */
   async saveToken(token, client, user) {
     const pipe = this.redisClient.pipeline();
-    const enhancedToken = {
-      ...token, ...{ userId: user.id, clientId: client.clientId },
-    };
+    const scopedUserInfo = token.scope.split(' ').reduce((acc, val) => {
+      // eslint-disable-next-line security/detect-object-injection
+      acc[val] = user[val];
+      return acc;
+    }, {});
 
     const data = {
       accessToken: token.accessToken,
@@ -122,10 +122,13 @@ class RedisOAuth2Model extends OAuth2Model {
       client: {
         id: client.clientId,
       },
-      user: {
-        id: user.id,
-      },
+      user: scopedUserInfo,
     };
+
+    const enhancedToken = {
+      ...token, ...{ user: JSON.stringify(scopedUserInfo), clientId: client.clientId },
+    };
+
     await pipe
       .hmset(fmt(formats.token, token.accessToken), enhancedToken)
       .hmset(fmt(formats.token, token.refreshToken), enhancedToken)

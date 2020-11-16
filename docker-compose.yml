@@ -2,6 +2,7 @@ version: "3.4"
 services:
   app:
     image: express-server
+    container_name: express-server
     build:
       context: app
       target: prod
@@ -9,6 +10,7 @@ services:
       NODE_ENV: production
       MONGO_URL: ${MONGO_URL}
       REDIS_URL: ${REDIS_URL}
+      REDIS_CACHE_EXPIRATION_PERIOD: ${REDIS_CACHE_EXPIRATION_PERIOD}
       CLIENT_ID: ${CLIENT_ID}
       CLIENT_SECRET: ${CLIENT_SECRET}
       ACCESS_TOKEN_LIFETIME: ${ACCESS_TOKEN_LIFETIME}

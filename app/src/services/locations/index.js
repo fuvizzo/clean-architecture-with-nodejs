@@ -8,20 +8,25 @@ module.exports = (locationRepository, mapServices, forecastServices) => {
       town,
       postalCode,
       country,
-    } = data;
-    const newAddress = new Address(data);
+    } = data.address;
+
+    const newAddress = new Address(data.address);
 
     const addressStr = `${street} ${streetNumber}, ${town}, ${postalCode}, ${country}`;
 
     const geoLocation = new GeoLocation(await mapServices.geocode(addressStr));
-    const location = { ...{ address: newAddress }, coords: geoLocation };
+    const location = {
+      queriedBy: data.user.email,
+      ...{ address: newAddress },
+      coords: geoLocation,
+    };
     const newRecord = await locationRepository.add(location);
     return newRecord;
   };
 
   return {
     checkWeather: async (data) => {
-      const address = new Address(data);
+      const address = new Address(data.address);
       let location = await locationRepository.getByAddress(address);
       if (!location) {
         location = await checkAddress(data);

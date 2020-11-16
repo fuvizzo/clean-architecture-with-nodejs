@@ -11,6 +11,7 @@ services:
       NODE_ENV: development
       MONGO_URL: ${MONGO_URL}
       REDIS_URL: ${REDIS_URL}
+      REDIS_CACHE_EXPIRATION_PERIOD: ${REDIS_CACHE_EXPIRATION_PERIOD}
       CLIENT_ID: ${CLIENT_ID}
       CLIENT_SECRET: ${CLIENT_SECRET}
       ACCESS_TOKEN_LIFETIME: ${ACCESS_TOKEN_LIFETIME}
@@ -25,7 +26,7 @@ services:
     links:
       - mongo
       - redis
-    command: ["nodemon", "--inspect=0.0.0.0:9229", "src/server/index.js"]
+    command: ["nodemon", "--inspect=0.0.0.0:9229", "src/index.js"]
   redis:
     image: redis
     container_name: redis

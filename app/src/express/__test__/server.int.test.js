@@ -22,12 +22,12 @@ describe('App integration tests', () => {
   describe('Location endpoints', () => {
     describe('Check the weather for a given address', () => {
       const getAccessToken = async () => request(app).post('/auth/oauth/token')
-        .set('Authorization', 'Basic MjkyMDg1MjIzODMwLmFwcHMud2Vmb3guY29tOkdCQXlmVkw3WVd0UDZndWRMSWpiUlpWX04wZFc0ZjN4RVRpSXhxdG9rRUFaNkZBc0J0Z3lJcTBNcFUxdVE3SjA4eE9UTzJ6d1AwT3VPM3BNVkFVVGlk')
+        .set('Authorization', `Basic ${Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`, 'utf8').toString('base64')}`)
         .set('Content-type', 'application/x-www-form-urlencoded')
         .send({
           grant_type: 'password',
-          username: 'foo',
-          password: 'foo',
+          username: 'test-user',
+          password: 'password',
           scope: 'email basic_user_info',
         });
 

@@ -100,7 +100,7 @@ $ docker-compose up
 
 ### Tests
 
-There are both unit and integration tests and a quick test to healthcheck the server:
+There are both unit and integration tests provided for this project:
 
 - testing framework: **Jest**
 

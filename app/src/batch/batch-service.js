@@ -27,7 +27,6 @@ const checkweather = async (forecastServices, location) => {
         }],
         dt,
       } = data;
-      const dateTime = moment(moment(dt * 1000).format('HH:mm'), 'hh:mm');
       if (PRECIPITATION_TYPES.some((type) => type === main)) {
         if (location.notification.causes.length === 0
           && location.notification.schedules.lenght === 0) {
@@ -36,6 +35,7 @@ const checkweather = async (forecastServices, location) => {
           if (location.notification.schedules.lenght === 0) {
             sendEmail(location.queriedBy);
           } else if (location.notification.schedules.reduce((acc, val) => {
+            const dateTime = moment(moment(dt * 1000).format('HH:mm'), 'hh:mm');
             const rangeEnds = val.split(';');
             const startTime = moment(rangeEnds[0], 'hh:mm');
             const endTime = moment(rangeEnds[1], 'hh:mm');

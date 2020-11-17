@@ -25,7 +25,7 @@ Express server enpoints are implemented here with some mechanism to handle input
 **POST requsest to get the oAuth token**
 
 - curl --location --request POST 'http://localhost:3000/auth/oauth/token' \
-  --header 'Authorization: Basic <base64 ClientId:ClientSecret>' \
+  --header 'Authorization: Basic *base64 ClientId:ClientSecret*' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'grant_type=password' \
   --data-urlencode 'username=<username>' \
@@ -35,12 +35,12 @@ Express server enpoints are implemented here with some mechanism to handle input
 **GET requsest to retrieve the forecast data associated to a valid address**
 
 - curl --location --request GET 'http://localhost:3000/auth/weather?street=calle%20marina&streetNumber=187&town=Barcelona&postalCode=08013&country=Spain' \
-  --header 'Authorization: Bearer <oAuth token>'
+  --header 'Authorization: Bearer *oAuth token*'
 
 **POST requsest to set the notification options**
 
 - curl --location --request POST 'http://localhost:3000/auth/notification-options' \
-  --header 'Authorization: Bearer <oAuth token>' \
+  --header 'Authorization: Bearer *oAuth token*' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'causes=Rain' \
   --data-urlencode 'causes=Snow'

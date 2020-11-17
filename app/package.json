@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "DEBUG=* nodemon src/index.js",
+    "test": "jest",
     "test:int": "jest src/express --coverage",
     "prefill-redis": "node -r dotenv/config init-redis.js dotenv_config_path=../.env.development"
   },

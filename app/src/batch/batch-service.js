@@ -1,3 +1,5 @@
+const debug = require('debug')('batch-process');
+
 const { pipeline, Readable } = require('stream');
 const moment = require('moment');
 const pipe = require('pipeline-pipe');
@@ -11,7 +13,7 @@ const PRECIPITATION_TYPES = [
 ];
 
 const sendEmail = (email) => {
-  console.log(`Sending email to ${email}`);
+  debug(`Sending email to ${email}`);
 };
 
 const checkweather = async (forecastServices, location) => {
@@ -50,7 +52,8 @@ const checkweather = async (forecastServices, location) => {
     }
     throw new Error('Something went wrong');
   } catch (err) {
-    console.log(err);
+    debug(err);
+    return null;
   }
 };
 
@@ -67,6 +70,6 @@ module.exports = async () => {
     Readable.from(locationRepository.getAll().lean()),
     pipe((data) => checkweather(forecastServices, data)),
     // pipe(update),
-    (err) => console.log(err || 'Process comlpleted'),
+    (err) => debug(err || 'Process comlpleted'),
   );
 };

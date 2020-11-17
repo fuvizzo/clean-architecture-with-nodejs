@@ -14,4 +14,5 @@ module.exports = (() => ({
   cachingServices,
   mapServices: GoogleMapServices,
   forecastServices: OpenWeatherServices,
+  // mailServices: TODO must be implemented
 }))();

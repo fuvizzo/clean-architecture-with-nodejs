@@ -1,8 +1,8 @@
 version: "3.4"
 services:
   app:
-    image: express-server
-    container_name: express-server
+    image: app
+    container_name: app
     build:
       context: app
       target: prod
@@ -25,6 +25,7 @@ services:
     links:
       - mongo
       - redis
+    command: ["node", "src/index.js"]
   redis:
     image: redis
     container_name: redis

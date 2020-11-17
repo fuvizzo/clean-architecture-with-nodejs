@@ -1,19 +1,30 @@
-const debug = require('debug')('express-server');
-const app = require('./express');
+const debug = require('debug')('app');
+const expressServer = require('./express');
+const batchService = require('./batch');
 
-const startServer = () => {
+const startGracefulShutdown = () => {
+  debug('Starting shutdown of express...');
+  expressServer.close(() => {
+    debug('Express shut down.');
+  });
+};
+
+const init = () => {
   try {
-    app.listen(process.env.LISTENING_PORT, () =>
-      console.log(`Server running on port ${process.env.LISTENING_PORT}`));
+    batchService.start();
+    expressServer.listen(process.env.LISTENING_PORT, () => debug(`Server running on port ${process.env.LISTENING_PORT}`));
   } catch (err) {
-    console.log(err);
+    debug(err);
   }
 };
 
-startServer();
+init();
 
 process.on('unhandledRejection', (reason, p) => {
   // Recommended: send the information to a crash reporting service (i.e. sentry.io)
   debug('Unhandled Rejection:', reason.stack);
   process.exit(1);
 });
+
+process.on('SIGTERM', startGracefulShutdown);
+process.on('SIGINT', startGracefulShutdown);

@@ -61,7 +61,7 @@ You have to specify the following _environment_ variables:
 # Express
 
 - LISTENING_PORT = 3000
-- BATCH_POLLING_INTERVAL = 5000
+- BATCH_POLLING_INTERVAL = 360000
 
 # MongoDB
 

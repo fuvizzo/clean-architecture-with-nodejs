@@ -3,11 +3,6 @@ const LocationRepository = require('../../../contracts/repositories/location');
 const Location = require('./models/location');
 
 module.exports = class MongoDbLocationRepository extends LocationRepository {
-  constructor() {
-    super();
-    this.locations = [];
-  }
-
   add(locationInstance) {
     const newLocation = Location.findOneAndUpdate({
       address: locationInstance.address,
@@ -15,15 +10,14 @@ module.exports = class MongoDbLocationRepository extends LocationRepository {
       new: true,
       upsert: true,
     });
-    this.locations.push(locationInstance);
     return newLocation;
   }
 
   update(locationId, data) {
-    const newLocation = Location.findByIdAndUpdate(locationId, data, {
+    const location = Location.findByIdAndUpdate(locationId, data, {
       new: true,
     });
-    return newLocation;
+    return location;
   }
 
   getByAddress(addressInstance) {

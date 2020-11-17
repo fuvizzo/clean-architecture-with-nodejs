@@ -24,6 +24,23 @@ services:
     links:
       - mongo
       - redis
+  scheduler:
+    image: scheduler
+    container_name: scheduler
+    build:
+      context: scheduler
+      target: prod
+    environment:
+      NODE_ENV: production
+      POLLING_INTERVAL: ${POLLING_INTERVAL}
+      MONGO_URL: ${MONGO_URL}
+      OPEN_WEATHER_API_KEY: ${OPEN_WEATHER_API_KEY}
+    ports:
+      - 3001:3001
+    volumes:
+      - ./scheduler:/usr/src/app
+    links:
+      - mongo
   redis:
     image: redis
     container_name: redis

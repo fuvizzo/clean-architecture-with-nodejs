@@ -82,7 +82,7 @@ describe('Service integration tests', () => {
   });
 
   describe('Check for precipitation changes for every address', () => {
-    it('   ', async () => {
+    it('runs the bathc process streaming the records from mongodb until the end of the pipeline', async () => {
       await service();
     });
   });

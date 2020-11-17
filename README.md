@@ -25,7 +25,7 @@ Express server enpoints are implemented here with some mechanism to handle input
 **POST requsest to get the oAuth token**
 
 - curl --location --request POST 'http://localhost:3000/auth/oauth/token' \
-  --header 'Authorization: Basic <base64 ClientId:ClientSecret' \
+  --header 'Authorization: Basic <base64 ClientId:ClientSecret>' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'grant_type=password' \
   --data-urlencode 'username=<username>' \
@@ -40,7 +40,7 @@ Express server enpoints are implemented here with some mechanism to handle input
 **POST requsest to set the notification options**
 
 - curl --location --request POST 'http://localhost:3000/auth/notification-options' \
-  --header 'Authorization: Bearer <>' \
+  --header 'Authorization: Bearer <oAuth token>' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'causes=Rain' \
   --data-urlencode 'causes=Snow'

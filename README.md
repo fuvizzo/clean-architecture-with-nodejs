@@ -20,6 +20,13 @@ Remember to:
 In it runs the Express server and the batch service.
 Express server enpoints are implemented here with some mechanism to handle input validation (@hapi/joi) and middlewares to ease async operations and error handling.
 
+### The oAuth system
+
+The scope "email basic_user_info" must be specified when the oAuth token is requested to tell the Redis oAuth server to add those info to the token
+The user email will be used:
+  - in the batch process to send the notification to the user
+  - to allow a user to set the notification options
+
 #### Endpoints (curl request examples):
 
 **POST requsest to get the oAuth token**
@@ -28,8 +35,8 @@ Express server enpoints are implemented here with some mechanism to handle input
   --header 'Authorization: Basic <*base64 ClientId:ClientSecret*>' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'grant_type=password' \
-  --data-urlencode 'username=<username>' \
-  --data-urlencode 'password=<password>' \
+  --data-urlencode 'username=<*username*>' \
+  --data-urlencode 'password=<*password*>' \
   --data-urlencode 'scope=email basic_user_info'
 
 **GET requsest to retrieve the forecast data associated to a valid address**

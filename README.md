@@ -66,20 +66,20 @@ You have to specify the following _environment_ variables:
 # MongoDB
 
 - MONGO_URL = <mongo db coonnection string>
-- MONGO_INITDB_ROOT_USERNAME = <root username>
-- MONGO_INITDB_ROOT_PASSWORD = <root password>
-- MONGO_INITDB_DATABASE = <database name>
-- MONGO_INITDB_USERNAME = <username>
-- MONGO_INITDB_PASSWORD = <password>
+- MONGO_INITDB_ROOT_USERNAME = <*root username*>
+- MONGO_INITDB_ROOT_PASSWORD = <*root password*>
+- MONGO_INITDB_DATABASE = <*database name*>
+- MONGO_INITDB_USERNAME = <*username*>
+- MONGO_INITDB_PASSWORD = <*password*>
 - MONGO_REPLICA_SET_NAME = rs0
 
 # Google services
 
-- GOOGLE_MAPS_API_KEY = <google API key>
+- GOOGLE_MAPS_API_KEY = <*google API key*>
 
 # Open weather services
 
-- OPEN_WEATHER_API_KEY= <open weather API key>
+- OPEN_WEATHER_API_KEY= <*open weather API key*>
 
 # Redis
 
@@ -89,8 +89,8 @@ You have to specify the following _environment_ variables:
 # Oauth2
 
 - ACCESS_TOKEN_LIFETIME=36000
-- CLIENT_ID = <client ID>
-- CLIENT_SECRET = <client secret>
+- CLIENT_ID = <*client ID*>
+- CLIENT_SECRET = <*client secret*>
 
 ### Installation
 

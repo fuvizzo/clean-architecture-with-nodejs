@@ -1,4 +1,4 @@
-#Wefox code-chalenge
+# Wefox code-chalenge
 
 ## Mongodb data model
 

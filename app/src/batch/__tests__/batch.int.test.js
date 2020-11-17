@@ -1,11 +1,12 @@
 const faker = require('faker');
 
 const Location = require('../../frameworks/persistence/mongo-db/models/location');
-const service = require('..');
+const service = require('../batch-service');
 const dependencies = require('../../config/dependencies');
 
 jest.mock('../../config/dependencies');
 jest.setTimeout(60000);
+
 const PRECIPITATION_TYPES = [
   'Thunderstorm',
   'Drizzle',

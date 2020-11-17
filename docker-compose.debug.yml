@@ -18,6 +18,7 @@ services:
       LISTENING_PORT: ${LISTENING_PORT}
       GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
       OPEN_WEATHER_API_KEY: ${OPEN_WEATHER_API_KEY}
+      BATCH_POLLING_INTERVAL: ${BATCH_POLLING_INTERVAL}
     ports:
       - 3000:${LISTENING_PORT}
       - 9229:9229
@@ -27,25 +28,6 @@ services:
       - mongo
       - redis
     command: ["nodemon", "--inspect=0.0.0.0:9229", "src/index.js"]
-  scheduler:
-    image: scheduler
-    container_name: scheduler
-    build:
-      context: scheduler
-      target: dev
-    environment:
-      NODE_ENV: development
-      POLLING_INTERVAL: ${POLLING_INTERVAL}
-      MONGO_URL: ${MONGO_URL}
-      OPEN_WEATHER_API_KEY: ${OPEN_WEATHER_API_KEY}
-    ports:
-      - 3001:3001
-      - 9230:9230
-    volumes:
-      - ./scheduler:/usr/src/app
-    links:
-      - mongo
-    command: ["nodemon", "--inspect=0.0.0.0:9230", "src/index.js"]
   redis:
     image: redis
     container_name: redis

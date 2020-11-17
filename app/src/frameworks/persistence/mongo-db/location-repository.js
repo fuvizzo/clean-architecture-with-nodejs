@@ -23,4 +23,12 @@ module.exports = class MongoDbLocationRepository extends LocationRepository {
   getByAddress(addressInstance) {
     return Location.findOne({ address: addressInstance });
   }
+
+  getAll() {
+    return Location.find();
+  }
+
+  getByEmail(email) {
+    return Location.findOne({ queriedBy: email });
+  }
 };

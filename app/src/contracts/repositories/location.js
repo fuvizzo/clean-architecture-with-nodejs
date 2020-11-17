@@ -23,6 +23,12 @@ module.exports = class LocationRepository {
     });
   }
 
+  getByEmail(email) {
+    return new Promise((resolve, reject) => {
+      reject(new Error('not implemented'));
+    });
+  }
+
   getByAddress(addressInstance) {
     return new Promise((resolve, reject) => {
       reject(new Error('not implemented'));

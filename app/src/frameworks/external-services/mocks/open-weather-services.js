@@ -17,20 +17,7 @@ const dt2 = '1605900600'; // 20/11/2020 19:30:00
 module.exports = class MockedOpenWeatherServices extends ForecastServices {
   static getData({ lat, lng }) {
     return new Promise((resolve, reject) => {
-      if (lat && lng) {
-        resolve({
-          status: 200,
-          data: {
-
-            dt: Math.random() <= 0.5 ? dt1 : dt2,
-            weather: [
-              {
-                main: randomMain(6),
-              },
-            ],
-          },
-        });
-      } else if (lat === 41.3999924 && lng === 2.1795) {
+      if (lat === 41.3999924 && lng === 2.1795) {
         resolve({
           data: {
             coord: {
@@ -76,6 +63,19 @@ module.exports = class MockedOpenWeatherServices extends ForecastServices {
             cod: 200,
           },
           type: 'current-weather',
+        });
+      } else if (lat && lng) {
+        resolve({
+          status: 200,
+          data: {
+
+            dt: Math.random() <= 0.5 ? dt1 : dt2,
+            weather: [
+              {
+                main: randomMain(6),
+              },
+            ],
+          },
         });
       } else {
         reject(new Error('Cannot retrieve the current forecast for the given address'));

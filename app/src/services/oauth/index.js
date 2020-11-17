@@ -38,7 +38,7 @@ module.exports = (cachingServices) => {
       try {
         const authData = await oAuth2.authenticate(request, response);
         debug('the request was successfully authenticated');
-        res.auth = authData;
+        req.auth = authData;
         next();
       } catch (err) {
         next(err);

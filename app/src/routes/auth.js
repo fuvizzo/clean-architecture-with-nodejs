@@ -30,5 +30,13 @@ module.exports = (dependencies) => {
     ),
   );
 
+  router.post(
+    '/notification-options',
+    asyncHandler(
+      async (req, res, next) => locationController(dependencies)
+        .setNotificationOptions(req, res, next),
+    ),
+  );
+
   return router;
 };

@@ -34,5 +34,14 @@ module.exports = (locationRepository, mapServices, forecastServices) => {
       const forecast = new Forecast(await forecastServices.getData(location.coords));
       return locationRepository.update(location.id, { forecast });
     },
+
+    setNotificationOptions: async (data) => {
+      const location = await locationRepository.getByEmail(data.user.email);
+      if (location) {
+        await locationRepository.update(location.id, { notification: data.notification });
+        return true;
+      }
+      return false;
+    },
   };
 };

@@ -1,9 +1,15 @@
 module.exports = (client) => client.multi()
-  .hmset('users:test-user', {
-    id: '1',
-    username: 'test-user',
+  .hmset('users:test-user-1', {
+    id: 'abc123',
+    username: 'test-user-1',
     password: 'password',
-    email: 'test-user@foo.foo',
+    email: 'test-user-1@foo.foo',
+  })
+  .hmset('users:test-user-2', {
+    id: 'xyz456',
+    username: 'test-user-2',
+    password: 'password',
+    email: 'test-user-2@foo.foo',
   })
   .hmset(`clients:${process.env.CLIENT_ID}`, {
     clientId: process.env.CLIENT_ID,

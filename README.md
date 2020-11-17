@@ -102,7 +102,7 @@ $ docker-compose up
 
 There are both unit and integration tests and a quick test to healthcheck the server:
 
-- \*testing framework: **Jest\***
+- testing framework: **Jest\**
 
 ```sh
 $ npm run test

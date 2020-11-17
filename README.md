@@ -5,7 +5,7 @@
 | Location       |              | description                                         |
 | -------------- | ------------ | --------------------------------------------------- |
 | _address_      | Object       | { street, streetNumber, town, postalCode, country } |
-| _location_     | Object       | { lat, lng }                                        |
+| _coords_       | Object       | { lat, lng }                                        |
 | _notification_ | Object       | { causes: [], schedules: [] }                       |
 | _forecast_     | Object       | the Json Object returned by ForecastServices        |
 | _queriedBy_    | String       | user Email                                          |

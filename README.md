@@ -22,7 +22,8 @@ Express server enpoints are implemented here with some mechanism to handle input
 
 ### The oAuth system
 
-The scope "email basic_user_info" must be specified when the oAuth token is requested to tell the Redis oAuth server to add those info to the token
+The scope "email basic_user_info" must be specified when the oAuth token is requested to tell the Redis oAuth server to add those info to the token.
+
 The user email will be used:
   - in the batch process to send the notification to the user
   - to allow a user to set the notification options

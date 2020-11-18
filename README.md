@@ -65,7 +65,7 @@ You have to specify the following _environment_ variables:
 
 # MongoDB
 
-- MONGO_URL = <mongo db coonnection string>
+- MONGO_URL = <*mongo db coonnection string*>
 - MONGO_INITDB_ROOT_USERNAME = <*root username*>
 - MONGO_INITDB_ROOT_PASSWORD = <*root password*>
 - MONGO_INITDB_DATABASE = <*database name*>

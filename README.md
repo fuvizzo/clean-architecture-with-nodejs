@@ -1,8 +1,9 @@
 # Example of Clean architecture with nodejs
 
 references:
-https://roystack.home.blog/2019/10/22/node-clean-architecture-deep-dive/
-https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
+- https://roystack.home.blog/2019/10/22/node-clean-architecture-deep-dive/
+- https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
 ## Mongodb data model
 

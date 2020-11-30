@@ -1,4 +1,8 @@
-# Wefox code-chalenge
+# Example of Clean architecture with nodejs
+
+references:
+https://roystack.home.blog/2019/10/22/node-clean-architecture-deep-dive/
+https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
 ## Mongodb data model
 
@@ -111,6 +115,8 @@ $ npm run test:int
 
 # TO-DO
 
+- using Awilix for DI
 - more test coverage
 - provide swagger (OpenAPI) endpoint definitions
 - implementing the MailService
+
